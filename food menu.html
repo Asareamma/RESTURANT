@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tasty Bites - Food Menu</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>tailwind.config={theme:{extend:{colors:{primary:'#ff6b35',secondary:'#2ec4b6'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+body {
+font-family: 'Poppins', sans-serif;
+}
+.menu-card:hover {
+transform: translateY(-8px) scale(1.02);
+box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+.menu-card button:hover {
+transform: none;
+}
+.splash-effect {
+position: absolute;
+width: 100%;
+height: 100%;
+background-size: cover;
+background-position: center;
+opacity: 0;
+transition: opacity 0.3s ease;
+}
+.menu-card:hover .splash-effect {
+opacity: 0.6;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+-webkit-appearance: none;
+margin: 0;
+}
+input[type="number"] {
+-moz-appearance: textfield;
+}
+.spice-level-option input:checked + label {
+border-color: #ff6b35;
+background-color: rgba(255, 107, 53, 0.1);
+}
+.addon-option input:checked + label {
+border-color: #ff6b35;
+background-color: rgba(255, 107, 53, 0.1);
+}
+.delivery-option input:checked + label {
+border-color: #ff6b35;
+background-color: rgba(255, 107, 53, 0.1);
+}
+.custom-switch {
+position: relative;
+display: inline-block;
+width: 48px;
+height: 24px;
+}
+.custom-switch input {
+opacity: 0;
+width: 0;
+height: 0;
+}
+.switch-slider {
+position: absolute;
+cursor: pointer;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background-color: #ccc;
+transition: .4s;
+border-radius: 24px;
+}
+.switch-slider:before {
+position: absolute;
+content: "";
+height: 18px;
+width: 18px;
+left: 3px;
+bottom: 3px;
+background-color: white;
+transition: .4s;
+border-radius: 50%;
+}
+input:checked + .switch-slider {
+background-color: #ff6b35;
+}
+input:checked + .switch-slider:before {
+transform: translateX(24px);
+}
+</style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+<!-- Header -->
+<header class="bg-white shadow-sm sticky top-0 z-50">
+<div class="container mx-auto px-4 py-4 flex justify-between items-center">
+<a href="#" class="text-3xl font-['Pacifico'] text-primary">logo</a>
+<nav class="hidden md:flex space-x-8">
+<a href="index.html" class="font-medium text-gray-800 hover:text-primary transition">Home</a>
+<a href="menu.html" class="font-medium text-primary border-b-2 border-primary">Menu</a>
+<a href="#" class="font-medium text-gray-800 hover:text-primary transition">About Us</a>
+<a href="#" class="font-medium text-gray-800 hover:text-primary transition">Contact</a>
+</nav>
+<div class="flex items-center space-x-4">
+<div class="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 cursor-pointer hover:bg-gray-200 transition">
+<i class="ri-search-line ri-lg text-gray-700"></i>
+</div>
+<div class="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 cursor-pointer hover:bg-gray-200 transition relative">
+<i class="ri-shopping-cart-2-line ri-lg text-gray-700"></i>
+<span class="absolute -top-1 -right-1 bg-primary text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">0</span>
+</div>
+<div class="w-10 h-10 md:hidden flex items-center justify-center rounded-full bg-gray-100 cursor-pointer hover:bg-gray-200 transition" id="mobile-menu-button">
+<i class="ri-menu-line ri-lg text-gray-700"></i>
+</div>
+</div>
+</div>
+<!-- Mobile Menu -->
+<div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 px-4 py-2">
+<a href="https://readdy.ai/home/453008fb-55fa-43cd-ac1b-5f61d8f60a23/2cd0585b-d588-4097-9ba7-b95892c545f0" data-readdy="true" class="block py-2 font-medium text-gray-800 hover:text-primary transition">Home</a>
+<a href="#" class="block py-2 font-medium text-primary">Menu</a>
+<a href="#" class="block py-2 font-medium text-gray-800 hover:text-primary transition">About Us</a>
+<a href="#" class="block py-2 font-medium text-gray-800 hover:text-primary transition">Contact</a>
+</div>
+</header>
+<!-- Main Content -->
+<main>
+<!-- Hero Section -->
+<section class="relative overflow-hidden bg-gray-900 min-h-screen">
+<div class="absolute inset-0 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=Dark%20moody%20background%20with%20dramatic%20cheese%20pulls%20dripping%20from%20top%2C%20scattered%20golden%20crispy%20fries%2C%20fresh%20lettuce%20leaves%2C%20splashing%20colorful%20drinks%2C%20juicy%20chicken%20wings%2C%20hamburger%20patties%2C%20and%20vibrant%20red%20tomato%20slices%20floating%20in%20a%20dynamic%20composition.%20The%20scene%20has%20dramatic%20lighting%20with%20food%20elements%20creating%20an%20artistic%20pattern%20against%20the%20dark%20background.&width=1920&height=1080&seq=hero_bg&orientation=landscape" alt="Food Background" class="w-full h-full object-cover opacity-30">
+</div>
+<div class="container mx-auto px-4 py-16 md:py-24 relative z-10">
+<div class="absolute inset-0 pointer-events-none">
+<img src="https://readdy.ai/api/search-image?query=Deconstructed%20burger%20ingredients%20floating%20in%20a%20dynamic%20composition%20against%20a%20dark%20background:%20paper-thin%20tomato%20slices%2C%20crisp%20lettuce%20leaves%2C%20thin%20red%20onion%20rings%2C%20crunchy%20pickles%2C%20grilled%20chicken%20pieces%2C%20and%20golden%20crispy%20fries%20scattered%20artistically.%20Multiple%20colorful%20juice%20splashes%20create%20energy%20throughout%20the%20scene%2C%20with%20droplets%20suspended%20in%20mid-air.%20The%20lighting%20is%20dramatic%20and%20moody%2C%20highlighting%20the%20textures%20and%20creating%20an%20appetizing%20atmosphere.%20The%20composition%20has%20depth%20with%20ingredients%20at%20different%20distances%20from%20the%20camera.&width=1920&height=1080&seq=ingredients_bg&orientation=landscape" alt="Food Elements" class="w-full h-full object-cover opacity-20">
+</div>
+<div class="text-center mb-12 relative">
+<h1 class="text-5xl md:text-6xl font-bold text-white mb-4">Delicious Food, <br>Just a Click Away</h1>
+<p class="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">Explore our diverse menu featuring fresh fruit drinks, gourmet burgers, authentic rice dishes, and more.</p>
+</div>
+<div class="container mx-auto px-4">
+<div class="grid grid-cols-2 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+<div class="food-nav-item group relative bg-white/10 backdrop-blur-sm rounded-lg p-6 cursor-pointer transition-all duration-300 hover:bg-white/20 hover:translate-y-4">
+<div class="flex flex-col items-center text-center">
+<div class="w-16 h-16 flex items-center justify-center bg-primary/20 rounded-full mb-4 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=A%20variety%20of%20colorful%20fruit%20drinks%20in%20elegant%20glasses%20with%20fresh%20fruit%20garnishes%2C%20ice%20cubes%2C%20and%20mint%20leaves.%20The%20drinks%20show%20vibrant%20colors%20from%20different%20fruits%20with%20some%20dynamic%20splashes.%20Professional%20food%20photography%20lighting%20highlights%20the%20refreshing%20nature%20of%20the%20drinks.&width=200&height=200&seq=drinks_nav&orientation=squarish" alt="Drinks" class="w-full h-full object-cover">
+</div>
+<h3 class="text-3xl font-bold text-white group-hover:text-primary transition-colors">Drinks</h3>
+<i class="ri-arrow-right-line ri-lg text-primary ml-auto opacity-0 group-hover:opacity-100 transition-opacity"></i>
+</div>
+<div class="food-content hidden group-hover:block mt-4 pl-22">
+<div class="grid grid-cols-2 gap-4 mb-4">
+<img src="https://readdy.ai/api/search-image?query=Fresh%20fruit%20smoothie%20with%20tropical%20fruits%20and%20mint%20garnish%20in%20a%20clear%20glass&width=150&height=150&seq=drinks1_nav&orientation=squarish" alt="Fruit Smoothie" class="w-full h-24 object-cover rounded-lg">
+<img src="https://readdy.ai/api/search-image?query=Colorful%20layered%20fruit%20juice%20with%20fresh%20fruit%20slices%20in%20a%20tall%20glass&width=150&height=150&seq=drinks2_nav&orientation=squarish" alt="Fruit Juice" class="w-full h-24 object-cover rounded-lg">
+</div>
+<p class="text-gray-300 mb-2">Refreshing natural drinks made from fresh fruits</p>
+<ul class="text-gray-300 text-sm mb-3">
+<li class="flex items-center"><i class="ri-checkbox-circle-line text-primary mr-2"></i>100% Natural</li>
+<li class="flex items-center"><i class="ri-checkbox-circle-line text-primary mr-2"></i>No added sugar</li>
+<li class="flex items-center"><i class="ri-checkbox-circle-line text-primary mr-2"></i>Vitamin-rich</li>
+</ul>
+<span class="text-primary font-medium">Starting from ₵49.90</span>
+</div>
+</div>
+<div class="food-nav-item group relative bg-white/10 backdrop-blur-sm rounded-lg p-6 cursor-pointer transition-all duration-300 hover:bg-white/20 hover:translate-y-4">
+<div class="flex flex-col items-center text-center">
+<div class="w-16 h-16 flex items-center justify-center bg-primary/20 rounded-full mb-4 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=A%20delicious%20shawarma%20wrap%20with%20grilled%20meat%2C%20fresh%20vegetables%2C%20and%20sauce%20visible.%20The%20shawarma%20is%20wrapped%20in%20flatbread%20and%20shows%20layers%20of%20ingredients.%20The%20wrap%20is%20cut%20at%20an%20angle%20to%20showcase%20the%20filling.%20Professional%20food%20photography%20lighting%20highlights%20the%20textures%20and%20colors.&width=200&height=200&seq=shawarma_nav&orientation=squarish" alt="Shawarma" class="w-full h-full object-cover">
+</div>
+<h3 class="text-xl font-bold text-white group-hover:text-primary transition-colors">Shawarma</h3>
+</div>
+<div class="food-content hidden group-hover:block mt-4 pl-22">
+<div class="grid grid-cols-2 gap-4 mb-4">
+<img src="https://readdy.ai/api/search-image?query=Chicken%20shawarma%20wrap%20with%20garlic%20sauce%20and%20fresh%20vegetables%2C%20wrapped%20in%20foil%20at%20the%20bottom&width=200&height=200&seq=shawarma1_nav&orientation=squarish" alt="Chicken Shawarma" class="w-full h-32 object-cover rounded-lg">
+<img src="https://readdy.ai/api/search-image?query=Beef%20shawarma%20platter%20with%20hummus%2C%20tabbouleh%2C%20and%20pita%20bread%20on%20a%20rustic%20plate&width=200&height=200&seq=shawarma2_nav&orientation=squarish" alt="Beef Shawarma" class="w-full h-32 object-cover rounded-lg">
+</div>
+<p class="text-gray-300 mb-4 text-lg">Authentic shawarma wraps with tender meat and fresh toppings</p>
+<ul class="text-gray-300 text-base mb-4">
+<li class="flex items-center"><i class="ri-checkbox-circle-line text-primary mr-2"></i>Choice of chicken or beef</li>
+<li class="flex items-center"><i class="ri-checkbox-circle-line text-primary mr-2"></i>Special house sauces</li>
+<li class="flex items-center"><i class="ri-checkbox-circle-line text-primary mr-2"></i>Fresh vegetables</li>
+</ul>
+<span class="text-primary font-medium text-lg">Starting from ₵69.90</span>
+</div>
+</div>
+<div class="food-nav-item group relative bg-white/10 backdrop-blur-sm rounded-lg p-6 cursor-pointer transition-all duration-300 hover:bg-white/20 hover:translate-y-4">
+<div class="flex flex-col items-center text-center">
+<div class="w-16 h-16 flex items-center justify-center bg-primary/20 rounded-full mb-4 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=A%20gourmet%20burger%20with%20a%20juicy%20beef%20patty%2C%20melted%20cheese%2C%20fresh%20lettuce%2C%20tomatoes%2C%20and%20a%20brioche%20bun.%20The%20burger%20is%20perfectly%20assembled%20with%20sauce%20dripping%20down.%20Professional%20food%20photography%20lighting%20highlights%20the%20textures.&width=200&height=200&seq=burger_nav&orientation=squarish" alt="Burgers" class="w-full h-full object-cover">
+</div>
+<h3 class="text-3xl font-bold text-white group-hover:text-primary transition-colors">Burgers</h3>
+<i class="ri-arrow-right-line ri-lg text-primary ml-auto opacity-0 group-hover:opacity-100 transition-opacity"></i>
+</div>
+<div class="food-content hidden group-hover:block mt-4 pl-22">
+<div class="grid grid-cols-2 gap-4 mb-4">
+<img src="https://readdy.ai/api/search-image?query=Classic%20cheeseburger%20with%20bacon%20and%20special%20sauce%20on%20a%20wooden%20board&width=150&height=150&seq=burger1_nav&orientation=squarish" alt="Classic Burger" class="w-full h-24 object-cover rounded-lg">
+<img src="https://readdy.ai/api/search-image?query=Chicken%20burger%20with%20avocado%20and%20fresh%20vegetables%20on%20a%20rustic%20plate&width=150&height=150&seq=burger2_nav&orientation=squarish" alt="Chicken Burger" class="w-full h-24 object-cover rounded-lg">
+</div>
+<p class="text-gray-300 mb-2">Juicy patties with fresh toppings and special sauces</p>
+<ul class="text-gray-300 text-sm mb-3">
+<li class="flex items-center"><i class="ri-checkbox-circle-line text-primary mr-2"></i>Premium beef patties</li>
+<li class="flex items-center"><i class="ri-checkbox-circle-line text-primary mr-2"></i>Fresh vegetables</li>
+<li class="flex items-center"><i class="ri-checkbox-circle-line text-primary mr-2"></i>Signature sauces</li>
+</ul>
+<span class="text-primary font-medium">Starting from ₵79.90</span>
+</div>
+</div>
+<div class="food-nav-item group relative bg-white/10 backdrop-blur-sm rounded-lg p-6 cursor-pointer transition-all duration-300 hover:bg-white/20 hover:translate-y-4">
+<div class="flex flex-col items-center text-center">
+<div class="w-16 h-16 flex items-center justify-center bg-primary/20 rounded-full mb-4 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=A%20colorful%20plate%20of%20perfectly%20cooked%20jollof%20rice%20with%20grilled%20chicken%20and%20vegetables.%20The%20rice%20has%20a%20vibrant%20orange-red%20color%20and%20is%20garnished%20with%20fresh%20herbs.%20Professional%20food%20photography%20lighting%20shows%20the%20texture%20of%20each%20grain.&width=200&height=200&seq=rice_nav&orientation=squarish" alt="Rice Dishes" class="w-full h-full object-cover">
+</div>
+<h3 class="text-3xl font-bold text-white group-hover:text-primary transition-colors">Rice Dishes</h3>
+<i class="ri-arrow-right-line ri-lg text-primary ml-auto opacity-0 group-hover:opacity-100 transition-opacity"></i>
+</div>
+<div class="food-content hidden group-hover:block mt-4 pl-22">
+<div class="grid grid-cols-2 gap-4 mb-4">
+<img src="https://readdy.ai/api/search-image?query=Special%20fried%20rice%20with%20shrimp%20and%20mixed%20vegetables%20in%20a%20bowl&width=150&height=150&seq=rice1_nav&orientation=squarish" alt="Fried Rice" class="w-full h-24 object-cover rounded-lg">
+<img src="https://readdy.ai/api/search-image?query=Traditional%20jollof%20rice%20with%20grilled%20chicken%20and%20plantains&width=150&height=150&seq=rice2_nav&orientation=squarish" alt="Jollof Rice" class="w-full h-24 object-cover rounded-lg">
+</div>
+<p class="text-gray-300 mb-2">Flavorful fried rice and authentic jollof rice</p>
+<ul class="text-gray-300 text-sm mb-3">
+<li class="flex items-center"><i class="ri-checkbox-circle-line text-primary mr-2"></i>Aromatic spices</li>
+<li class="flex items-center"><i class="ri-checkbox-circle-line text-primary mr-2"></i>Choice of protein</li>
+<li class="flex items-center"><i class="ri-checkbox-circle-line text-primary mr-2"></i>Side dishes available</li>
+</ul>
+<span class="text-primary font-medium">Starting from ₵89.90</span>
+</div>
+</div>
+<div class="food-nav-item group relative bg-white/10 backdrop-blur-sm rounded-lg p-6 cursor-pointer transition-all duration-300 hover:bg-white/20 hover:translate-y-4">
+<div class="flex flex-col items-center text-center">
+<div class="w-16 h-16 flex items-center justify-center bg-primary/20 rounded-full mb-4 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=Loaded%20french%20fries%20topped%20with%20melted%20cheese%2C%20bacon%20bits%2C%20and%20green%20onions.%20The%20cheese%20is%20creating%20beautiful%20pulls%20and%20the%20fries%20are%20golden%20and%20crispy.%20Professional%20food%20photography%20lighting%20highlights%20the%20textures.&width=200&height=200&seq=fries_nav&orientation=squarish" alt="Loaded Fries" class="w-full h-full object-cover">
+</div>
+<h3 class="text-3xl font-bold text-white group-hover:text-primary transition-colors">Loaded Fries</h3>
+<i class="ri-arrow-right-line ri-lg text-primary ml-auto opacity-0 group-hover:opacity-100 transition-opacity"></i>
+</div>
+<div class="food-content hidden group-hover:block mt-4 pl-22">
+<div class="grid grid-cols-2 gap-4 mb-4">
+<img src="https://readdy.ai/api/search-image?query=Cheese%20fries%20with%20bacon%20and%20jalapenos%20on%20a%20rustic%20plate&width=150&height=150&seq=fries1_nav&orientation=squarish" alt="Cheese Fries" class="w-full h-32 object-cover rounded-lg">
+<img src="https://readdy.ai/api/search-image?query=BBQ%20chicken%20loaded%20fries%20with%20ranch%20drizzle%20in%20a%20basket&width=150&height=150&seq=fries2_nav&orientation=squarish" alt="BBQ Fries" class="w-full h-32 object-cover rounded-lg">
+</div>
+<p class="text-gray-300 mb-4 text-lg">Crispy fries with premium toppings and sauces</p>
+<ul class="text-gray-300 text-base mb-4">
+<li class="flex items-center"><i class="ri-checkbox-circle-line text-primary mr-2"></i>Crispy golden fries</li>
+<li class="flex items-center"><i class="ri-checkbox-circle-line text-primary mr-2"></i>Premium toppings</li>
+<li class="flex items-center"><i class="ri-checkbox-circle-line text-primary mr-2"></i>Special sauces</li>
+</ul>
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-center">
+<span class="text-primary font-medium text-lg">Starting from ₵64.90</span>
+</div>
+<button class="w-full bg-secondary text-white px-4 py-2 rounded-button text-sm font-medium hover:bg-opacity-90 transition whitespace-nowrap flex items-center justify-center">
+<i class="ri-add-circle-line ri-lg mr-2"></i>
+Add-ons Menu
+</button>
+</div>
+</div>
+</div>
+<div class="food-nav-item group relative bg-white/10 backdrop-blur-sm rounded-lg p-6 cursor-pointer transition-all duration-300 hover:bg-white/20 hover:translate-y-4">
+<div class="flex flex-col items-center text-center">
+<div class="w-16 h-16 flex items-center justify-center bg-primary/20 rounded-full mb-4 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=Crispy%20chicken%20wings%20with%20a%20glossy%20sauce%20coating%20and%20garnished%20with%20sesame%20seeds%20and%20green%20onions.%20The%20wings%20are%20arranged%20beautifully%20showing%20their%20golden-brown%20crispy%20texture.%20Professional%20food%20photography%20lighting%20highlights%20the%20glaze.&width=200&height=200&seq=wings_nav&orientation=squarish" alt="Chicken Wings" class="w-full h-full object-cover">
+</div>
+<h3 class="text-3xl font-bold text-white group-hover:text-primary transition-colors">Chicken Wings</h3>
+<i class="ri-arrow-right-line ri-lg text-primary ml-auto opacity-0 group-hover:opacity-100 transition-opacity"></i>
+</div>
+<div class="food-content hidden group-hover:block mt-4 pl-22">
+<div class="grid grid-cols-2 gap-4 mb-4">
+<img src="https://readdy.ai/api/search-image?query=BBQ%20glazed%20wings%20with%20blue%20cheese%20dip%20on%20a%20black%20plate&width=150&height=150&seq=wings1_nav&orientation=squarish" alt="BBQ Wings" class="w-full h-24 object-cover rounded-lg">
+<img src="https://readdy.ai/api/search-image?query=Spicy%20buffalo%20wings%20with%20celery%20sticks%20and%20ranch%20dressing&width=150&height=150&seq=wings2_nav&orientation=squarish" alt="Buffalo Wings" class="w-full h-24 object-cover rounded-lg">
+</div>
+<p class="text-gray-300 mb-2">Crispy wings with your choice of sauce</p>
+<ul class="text-gray-300 text-sm mb-3">
+<li class="flex items-center"><i class="ri-checkbox-circle-line text-primary mr-2"></i>Multiple sauce options</li>
+<li class="flex items-center"><i class="ri-checkbox-circle-line text-primary mr-2"></i>Customizable spice levels</li>
+<li class="flex items-center"><i class="ri-checkbox-circle-line text-primary mr-2"></i>Side dips included</li>
+</ul>
+<span class="text-primary font-medium">Starting from ₵99.90</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Categories Section -->
+<section class="py-16 bg-white">
+<div class="container mx-auto px-4">
+<div class="text-center mb-12">
+<h2 class="text-3xl font-bold text-gray-800 mb-4">Our Menu Categories</h2>
+<p class="text-gray-600 max-w-2xl mx-auto">Explore our wide range of delicious options, from refreshing drinks to satisfying meals</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- Fruit Drinks -->
+<div class="menu-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300 ease-in-out cursor-pointer" id="fruit-drinks">
+<div class="relative h-56 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=A%20refreshing%20display%20of%20colorful%20fruit%20drinks%20in%20clear%20glasses%20with%20fresh%20fruit%20slices%20on%20the%20rim.%20The%20drinks%20show%20vibrant%20colors%20of%20red%2C%20orange%2C%20yellow%2C%20and%20green%20from%20different%20fruits.%20Theres%20a%20splash%20of%20juice%20in%20mid-air%20above%20one%20of%20the%20glasses%2C%20capturing%20the%20dynamic%20and%20refreshing%20nature%20of%20the%20drinks.%20The%20background%20is%20clean%20and%20minimal%20to%20highlight%20the%20drinks.&width=400&height=300&seq=drinks1&orientation=landscape" alt="Fruit Drinks" class="w-full h-full object-cover object-top">
+<div class="splash-effect" style="background-image: url('https://readdy.ai/api/search-image?query=Abstract%20splash%20of%20colorful%20fruit%20juice%20with%20droplets%20in%20mid-air%20against%20a%20white%20background%2C%20showing%20vibrant%20colors%20of%20orange%2C%20red%2C%20and%20yellow%20liquid%20splashing%20in%20a%20dynamic%20motion&width=400&height=300&seq=splash1&orientation=landscape')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<h3 class="absolute bottom-4 left-4 text-white text-xl font-bold">Natural Fruit Drinks</h3>
+</div>
+<div class="p-4">
+<p class="text-gray-600 mb-4">Refreshing beverages made from 100% natural fruits, bursting with vitamins and flavor. Perfect for any time of day.</p>
+<div class="flex justify-center items-center mt-4">
+<button class="bg-primary text-white px-8 py-3 rounded-button font-medium hover:bg-opacity-90 transition whitespace-nowrap w-full">View Options</button>
+</div>
+<div class="text-center mt-2">
+<span class="text-sm text-gray-500">Starting from ₵49.90</span>
+</div>
+</div>
+</div>
+<!-- Coffee -->
+<div class="menu-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300 ease-in-out cursor-pointer" id="coffee">
+<div class="relative h-56 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=A%20beautiful%20arrangement%20of%20coffee%20drinks%20in%20various%20cups%20and%20glasses%2C%20showing%20different%20coffee%20preparations%20like%20espresso%2C%20cappuccino%2C%20latte%2C%20and%20cold%20brew.%20Theres%20steam%20rising%20from%20the%20hot%20coffees%20and%20condensation%20on%20the%20cold%20ones.%20The%20coffee%20has%20rich%2C%20dark%20colors%20with%20beautiful%20latte%20art%20on%20some%20drinks.%20The%20background%20is%20a%20clean%2C%20minimal%20surface%20to%20highlight%20the%20coffee%20drinks.&width=400&height=300&seq=coffee1&orientation=landscape" alt="Coffee Selection" class="w-full h-full object-cover object-top">
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<h3 class="absolute bottom-4 left-4 text-white text-xl font-bold">Coffee Selection</h3>
+</div>
+<div class="p-4">
+<p class="text-gray-600 mb-4">Premium coffee blends from around the world, expertly brewed to perfection. From espresso to cold brew.</p>
+<div class="flex justify-between items-center">
+<span class="text-sm text-gray-500">Starting from ₵34.90</span>
+<button class="bg-primary text-white px-4 py-2 rounded-button text-sm font-medium hover:bg-opacity-90 transition whitespace-nowrap">View Options</button>
+</div>
+</div>
+</div>
+<!-- Burgers & Shawarma -->
+<div class="menu-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300 ease-in-out cursor-pointer" id="burgers-shawarma">
+<div class="relative h-56 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=A%20mouthwatering%20display%20of%20gourmet%20burgers%20and%20shawarma%20wraps%20side%20by%20side.%20The%20burgers%20have%20juicy%20patties%20with%20melted%20cheese%2C%20fresh%20vegetables%2C%20and%20sauces%20dripping%20down.%20The%20shawarma%20wraps%20show%20layers%20of%20grilled%20meat%2C%20vegetables%2C%20and%20sauce%20wrapped%20in%20flatbread.%20Both%20foods%20are%20arranged%20on%20a%20wooden%20serving%20board%20with%20some%20fries%20visible%20on%20the%20side.%20The%20background%20is%20clean%20and%20minimal%20to%20highlight%20the%20food.&width=400&height=300&seq=burgers1&orientation=landscape" alt="Burgers & Shawarma" class="w-full h-full object-cover object-top">
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<h3 class="absolute bottom-4 left-4 text-white text-xl font-bold">Burgers & Shawarma</h3>
+</div>
+<div class="p-4">
+<p class="text-gray-600 mb-4">Juicy burgers and authentic shawarma wraps made with premium ingredients and our special house sauces.</p>
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-center">
+<span class="text-sm text-gray-500">Starting from ₵79.90</span>
+<button class="bg-primary text-white px-4 py-2 rounded-button text-sm font-medium hover:bg-opacity-90 transition whitespace-nowrap">View Options</button>
+</div>
+<button class="w-full bg-secondary text-white px-4 py-2 rounded-button text-sm font-medium hover:bg-opacity-90 transition whitespace-nowrap flex items-center justify-center">
+<i class="ri-add-circle-line ri-lg mr-2"></i>
+Add-ons Menu
+</button>
+</div>
+</div>
+</div>
+<!-- Rice Dishes -->
+<div class="menu-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300 ease-in-out cursor-pointer" id="rice-dishes">
+<div class="relative h-56 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=A%20delicious%20display%20of%20two%20rice%20dishes%20side%20by%20side%20-%20fried%20rice%20and%20jollof%20rice.%20The%20fried%20rice%20shows%20colorful%20vegetables%20and%20pieces%20of%20meat%20mixed%20with%20rice%20grains.%20The%20jollof%20rice%20has%20a%20rich%20red-orange%20color%20with%20visible%20spices%20and%20is%20garnished%20with%20herbs.%20Both%20dishes%20are%20served%20in%20elegant%20bowls%20with%20some%20side%20ingredients%20visible.%20The%20background%20is%20clean%20and%20minimal%20to%20highlight%20the%20food.&width=400&height=300&seq=rice1&orientation=landscape" alt="Rice Dishes" class="w-full h-full object-cover object-top">
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<h3 class="absolute bottom-4 left-4 text-white text-xl font-bold">Rice Dishes</h3>
+</div>
+<div class="p-4">
+<p class="text-gray-600 mb-4">Flavorful fried rice and authentic jollof rice prepared with aromatic spices and fresh vegetables.</p>
+<div class="flex justify-between items-center">
+<span class="text-sm text-gray-500">Starting from ₵89.90</span>
+<button class="bg-primary text-white px-4 py-2 rounded-button text-sm font-medium hover:bg-opacity-90 transition whitespace-nowrap">View Options</button>
+</div>
+</div>
+</div>
+<!-- Loaded Fries -->
+<div class="menu-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300 ease-in-out cursor-pointer" id="loaded-fries">
+<div class="relative h-56 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=A%20generous%20portion%20of%20golden%20crispy%20french%20fries%20loaded%20with%20various%20toppings%20such%20as%20melted%20cheese%2C%20bacon%20bits%2C%20jalape%C3%B1os%2C%20sour%20cream%2C%20and%20green%20onions.%20The%20fries%20are%20overflowing%20from%20their%20container%20with%20the%20toppings%20cascading%20down%20the%20sides.%20The%20cheese%20is%20visibly%20stretching%20as%20some%20fries%20are%20being%20pulled%20away.%20The%20background%20is%20clean%20and%20minimal%20to%20highlight%20the%20loaded%20fries.&width=400&height=300&seq=fries1&orientation=landscape" alt="Loaded Fries" class="w-full h-full object-cover object-top">
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<h3 class="absolute bottom-4 left-4 text-white text-xl font-bold">Loaded Fries</h3>
+</div>
+<div class="p-4">
+<p class="text-gray-600 mb-4">Crispy golden fries topped with a variety of premium ingredients from cheese to bacon and special sauces.</p>
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-center">
+<span class="text-sm text-gray-500">Starting from ₵64.90</span>
+<button class="bg-primary text-white px-4 py-2 rounded-button text-sm font-medium hover:bg-opacity-90 transition whitespace-nowrap">View Options</button>
+</div>
+<button class="w-full bg-secondary text-white px-4 py-2 rounded-button text-sm font-medium hover:bg-opacity-90 transition whitespace-nowrap flex items-center justify-center">
+<i class="ri-add-circle-line ri-lg mr-2"></i>
+Add-ons Menu
+</button>
+</div>
+</div>
+</div>
+<!-- Chicken Wings -->
+<div class="menu-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300 ease-in-out cursor-pointer" id="chicken-wings">
+<div class="relative h-56 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=A%20tempting%20plate%20of%20crispy%20fried%20chicken%20wings%20with%20a%20variety%20of%20dipping%20sauces%20on%20the%20side.%20The%20wings%20have%20a%20golden-brown%20crispy%20exterior%20with%20visible%20seasoning.%20Some%20wings%20are%20being%20dipped%20into%20sauce%2C%20showing%20the%20juicy%20meat%20inside.%20The%20wings%20are%20arranged%20on%20a%20serving%20plate%20with%20garnishes%20like%20celery%20sticks%20and%20lemon%20wedges.%20The%20background%20is%20clean%20and%20minimal%20to%20highlight%20the%20chicken%20wings.&width=400&height=300&seq=wings1&orientation=landscape" alt="Chicken Wings" class="w-full h-full object-cover object-top">
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<h3 class="absolute bottom-4 left-4 text-white text-xl font-bold">Chicken Wings</h3>
+</div>
+<div class="p-4">
+<p class="text-gray-600 mb-4">Crispy fried chicken wings tossed in your choice of sauce, from mild to extra spicy. Perfect for sharing.</p>
+<div class="flex justify-between items-center">
+<span class="text-sm text-gray-500">Starting from ₵99.90</span>
+<button class="bg-primary text-white px-4 py-2 rounded-button text-sm font-medium hover:bg-opacity-90 transition whitespace-nowrap">View Options</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Special Offers -->
+<section class="py-16 bg-gray-50">
+<div class="container mx-auto px-4">
+<div class="text-center mb-12">
+<h2 class="text-3xl font-bold text-gray-800 mb-4">Special Offers</h2>
+<p class="text-gray-600 max-w-2xl mx-auto">Limited time deals you don't want to miss</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="bg-white rounded-lg shadow-md overflow-hidden">
+<div class="flex flex-col md:flex-row">
+<div class="md:w-2/5 relative">
+<img src="https://readdy.ai/api/search-image?query=A%20family%20meal%20bundle%20with%20a%20variety%20of%20foods%20including%20burgers%2C%20fries%2C%20chicken%20wings%2C%20and%20drinks%20arranged%20together%20on%20a%20table.%20The%20presentation%20shows%20a%20complete%20meal%20deal%20with%20generous%20portions%20suitable%20for%20a%20family.%20The%20background%20is%20clean%20and%20minimal%20to%20highlight%20the%20food%20bundle.&width=300&height=300&seq=special1&orientation=squarish" alt="Family Bundle" class="w-full h-full object-cover object-top">
+<div class="absolute top-4 left-4 bg-primary text-white text-sm font-bold px-3 py-1 rounded-full">20% OFF</div>
+</div>
+<div class="p-6 md:w-3/5 flex flex-col justify-center">
+<h3 class="text-xl font-bold text-gray-800 mb-2">Family Bundle</h3>
+<p class="text-gray-600 mb-4">Get 2 burgers, 1 large fries, 6 wings, and 2 drinks at a special discounted price. Perfect for family dinner!</p>
+<div class="flex items-center mb-4">
+<span class="text-gray-400 line-through mr-2">₵329.90</span>
+<span class="text-primary font-bold text-xl">₵263.90</span>
+</div>
+<button class="bg-primary text-white px-4 py-2 rounded-button text-sm font-medium hover:bg-opacity-90 transition self-start whitespace-nowrap">Order Now</button>
+</div>
+</div>
+</div>
+<div class="bg-white rounded-lg shadow-md overflow-hidden">
+<div class="flex flex-col md:flex-row">
+<div class="md:w-2/5 relative">
+<img src="https://readdy.ai/api/search-image?query=A%20refreshing%20fruit%20drink%20combo%20showing%20two%20different%20colorful%20fruit%20drinks%20in%20elegant%20glasses%20with%20fresh%20fruit%20garnishes.%20One%20drink%20is%20being%20poured%20from%20a%20pitcher%2C%20creating%20a%20dynamic%20splash%20effect.%20The%20drinks%20have%20different%20vibrant%20colors%20and%20are%20garnished%20with%20mint%20leaves%20and%20fruit%20slices.%20The%20background%20is%20clean%20and%20minimal%20to%20highlight%20the%20drinks.&width=300&height=300&seq=special2&orientation=squarish" alt="Drink Combo" class="w-full h-full object-cover object-top">
+<div class="absolute top-4 left-4 bg-primary text-white text-sm font-bold px-3 py-1 rounded-full">BUY 1 GET 1</div>
+</div>
+<div class="p-6 md:w-3/5 flex flex-col justify-center">
+<h3 class="text-xl font-bold text-gray-800 mb-2">Fruit Drink Combo</h3>
+<p class="text-gray-600 mb-4">Buy any large fruit drink and get a second one free! Choose from our selection of refreshing natural beverages.</p>
+<div class="flex items-center mb-4">
+<span class="text-primary font-bold text-xl">₵59.90</span>
+<span class="text-gray-600 ml-2">for two drinks</span>
+</div>
+<button class="bg-primary text-white px-4 py-2 rounded-button text-sm font-medium hover:bg-opacity-90 transition self-start whitespace-nowrap">Order Now</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Testimonials -->
+<section class="py-16 bg-white">
+<div class="container mx-auto px-4">
+<div class="text-center mb-12">
+<h2 class="text-3xl font-bold text-gray-800 mb-4">What Our Customers Say</h2>
+<p class="text-gray-600 max-w-2xl mx-auto">Don't just take our word for it - hear from our satisfied customers</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="bg-gray-50 rounded-lg p-6 shadow-sm">
+<div class="flex items-center mb-4">
+<div class="text-primary">
+<i class="ri-star-fill ri-lg"></i>
+<i class="ri-star-fill ri-lg"></i>
+<i class="ri-star-fill ri-lg"></i>
+<i class="ri-star-fill ri-lg"></i>
+<i class="ri-star-fill ri-lg"></i>
+</div>
+</div>
+<p class="text-gray-600 mb-6">"The fruit drinks are absolutely amazing! So fresh and flavorful. I can really taste the difference compared to store-bought juices. My favorite is the mango splash!"</p>
+<div class="flex items-center">
+<div class="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center text-gray-600 font-medium">JD</div>
+<div class="ml-3">
+<h4 class="font-medium text-gray-800">James Davidson</h4>
+<p class="text-sm text-gray-500">Regular Customer</p>
+</div>
+</div>
+</div>
+<div class="bg-gray-50 rounded-lg p-6 shadow-sm">
+<div class="flex items-center mb-4">
+<div class="text-primary">
+<i class="ri-star-fill ri-lg"></i>
+<i class="ri-star-fill ri-lg"></i>
+<i class="ri-star-fill ri-lg"></i>
+<i class="ri-star-fill ri-lg"></i>
+<i class="ri-star-fill ri-lg"></i>
+</div>
+</div>
+<p class="text-gray-600 mb-6">"The jollof rice is authentic and delicious! Reminds me of my grandmother's recipe. The spice level options are perfect - I always go for medium spicy. Fast delivery too!"</p>
+<div class="flex items-center">
+<div class="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center text-gray-600 font-medium">OA</div>
+<div class="ml-3">
+<h4 class="font-medium text-gray-800">Olivia Adeyemi</h4>
+<p class="text-sm text-gray-500">Foodie Enthusiast</p>
+</div>
+</div>
+</div>
+<div class="bg-gray-50 rounded-lg p-6 shadow-sm">
+<div class="flex items-center mb-4">
+<div class="text-primary">
+<i class="ri-star-fill ri-lg"></i>
+<i class="ri-star-fill ri-lg"></i>
+<i class="ri-star-fill ri-lg"></i>
+<i class="ri-star-fill ri-lg"></i>
+<i class="ri-star-half-fill ri-lg"></i>
+</div>
+</div>
+<p class="text-gray-600 mb-6">"The loaded fries are to die for! I love being able to customize my toppings. The online ordering system is so easy to use, and the tracking feature is super helpful."</p>
+<div class="flex items-center">
+<div class="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center text-gray-600 font-medium">MP</div>
+<div class="ml-3">
+<h4 class="font-medium text-gray-800">Michael Patterson</h4>
+<p class="text-sm text-gray-500">Weekly Customer</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Download App Section -->
+<section class="py-16 bg-gradient-to-r from-primary/10 to-secondary/10">
+<div class="container mx-auto px-4">
+<div class="flex flex-col md:flex-row items-center">
+<div class="md:w-1/2 mb-8 md:mb-0">
+<h2 class="text-3xl font-bold text-gray-800 mb-4">Get Our Mobile App</h2>
+<p class="text-gray-600 mb-6">Download our app for a faster ordering experience, exclusive mobile deals, and easy order tracking.</p>
+<div class="flex flex-wrap gap-4">
+<button class="bg-gray-900 text-white px-6 py-3 rounded-button font-medium hover:bg-opacity-90 transition flex items-center whitespace-nowrap">
+<i class="ri-apple-fill ri-lg mr-2"></i>
+App Store
+</button>
+<button class="bg-gray-900 text-white px-6 py-3 rounded-button font-medium hover:bg-opacity-90 transition flex items-center whitespace-nowrap">
+<i class="ri-google-play-fill ri-lg mr-2"></i>
+Google Play
+</button>
+</div>
+</div>
+<div class="md:w-1/2 flex justify-center">
+<img src="https://readdy.ai/api/search-image?query=A%20smartphone%20displaying%20a%20food%20delivery%20app%20interface%20with%20vibrant%20food%20images%2C%20menu%20categories%2C%20and%20order%20tracking%20features.%20The%20phone%20is%20held%20at%20an%20angle%20to%20show%20the%20screen%20clearly%2C%20with%20a%20clean%20background.%20The%20app%20interface%20shows%20food%20items%20similar%20to%20those%20mentioned%20in%20the%20menu%20%28fruit%20drinks%2C%20burgers%2C%20rice%20dishes%2C%20etc.%29%20with%20an%20intuitive%20and%20modern%20design.&width=400&height=500&seq=app1&orientation=portrait" alt="Mobile App" class="w-64 rounded-xl shadow-lg">
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Customization Page (Initially Hidden) -->
+<div id="customization-page" class="fixed inset-0 bg-white z-50 overflow-y-auto hidden">
+<div class="container mx-auto px-4 py-6">
+<!-- Header -->
+<div class="flex items-center justify-between mb-6">
+<button id="back-to-menu" class="flex items-center text-gray-700 hover:text-primary transition">
+<i class="ri-arrow-left-line ri-lg mr-2"></i>
+Back to Menu
+</button>
+<h2 class="text-2xl font-bold text-gray-800">Customize Your Order</h2>
+<div class="w-8"></div> <!-- Spacer for alignment -->
+</div>
+<!-- Product Preview -->
+<div class="bg-gray-50 rounded-lg p-6 mb-8 flex flex-col md:flex-row items-center">
+<img id="product-image" src="" alt="Product" class="w-40 h-40 object-cover object-top rounded-lg mb-4 md:mb-0 md:mr-6">
+<div>
+<h3 id="product-name" class="text-xl font-bold text-gray-800 mb-2"></h3>
+<p id="product-description" class="text-gray-600 mb-4"></p>
+<div class="flex items-center">
+<span class="text-gray-700 font-medium mr-2">Base Price:</span>
+<span id="product-base-price" class="text-primary font-bold"></span>
+</div>
+</div>
+</div>
+<!-- Customization Options -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+<!-- Left Column -->
+<div>
+<!-- Spice Level -->
+<div class="mb-8">
+<h4 class="text-lg font-bold text-gray-800 mb-4">Spice Level</h4>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="spice-level-option">
+<input type="radio" name="spice-level" id="spice-mild" value="mild" class="hidden" checked>
+<label for="spice-mild" class="block border border-gray-200 rounded p-3 text-center cursor-pointer hover:border-primary hover:bg-primary/5 transition">
+<i class="ri-fire-line ri-lg text-yellow-500 mb-1"></i>
+<div class="text-sm font-medium">Mild</div>
+</label>
+</div>
+<div class="spice-level-option">
+<input type="radio" name="spice-level" id="spice-medium" value="medium" class="hidden">
+<label for="spice-medium" class="block border border-gray-200 rounded p-3 text-center cursor-pointer hover:border-primary hover:bg-primary/5 transition">
+<i class="ri-fire-line ri-lg text-orange-500 mb-1"></i>
+<div class="text-sm font-medium">Medium</div>
+</label>
+</div>
+<div class="spice-level-option">
+<input type="radio" name="spice-level" id="spice-hot" value="hot" class="hidden">
+<label for="spice-hot" class="block border border-gray-200 rounded p-3 text-center cursor-pointer hover:border-primary hover:bg-primary/5 transition">
+<i class="ri-fire-line ri-lg text-red-500 mb-1"></i>
+<div class="text-sm font-medium">Hot</div>
+</label>
+</div>
+<div class="spice-level-option">
+<input type="radio" name="spice-level" id="spice-extra-hot" value="extra-hot" class="hidden">
+<label for="spice-extra-hot" class="block border border-gray-200 rounded p-3 text-center cursor-pointer hover:border-primary hover:bg-primary/5 transition">
+<i class="ri-fire-line ri-lg text-red-600 mb-1"></i>
+<div class="text-sm font-medium">Extra Hot</div>
+</label>
+</div>
+</div>
+</div>
+<!-- Add-ons -->
+<div>
+<h4 class="text-lg font-bold text-gray-800 mb-4">Add-ons</h4>
+<div class="space-y-3" id="addons-container">
+<!-- Dynamically populated based on product -->
+</div>
+</div>
+</div>
+<!-- Right Column -->
+<div>
+<!-- Special Instructions -->
+<div class="mb-8">
+<h4 class="text-lg font-bold text-gray-800 mb-4">Special Instructions</h4>
+<textarea class="w-full border border-gray-200 rounded p-3 h-32 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary" placeholder="Any special requests or dietary restrictions?"></textarea>
+</div>
+<!-- Quantity -->
+<div>
+<h4 class="text-lg font-bold text-gray-800 mb-4">Quantity</h4>
+<div class="flex items-center">
+<button id="decrease-quantity" class="w-10 h-10 flex items-center justify-center border border-gray-200 rounded-l text-gray-600 hover:bg-gray-50 transition">
+<i class="ri-subtract-line ri-lg"></i>
+</button>
+<input type="number" id="quantity-input" value="1" min="1" class="w-16 h-10 border-y border-gray-200 text-center focus:outline-none">
+<button id="increase-quantity" class="w-10 h-10 flex items-center justify-center border border-gray-200 rounded-r text-gray-600 hover:bg-gray-50 transition">
+<i class="ri-add-line ri-lg"></i>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Total and Add to Cart -->
+<div class="bg-gray-50 rounded-lg p-6 flex flex-col md:flex-row justify-between items-center">
+<div class="mb-4 md:mb-0">
+<div class="text-gray-600 mb-1">Total Price</div>
+<div class="text-2xl font-bold text-primary" id="total-price">$0.00</div>
+</div>
+<button id="add-to-cart" class="bg-primary text-white px-8 py-3 rounded-button font-medium hover:bg-opacity-90 transition flex items-center whitespace-nowrap">
+<i class="ri-shopping-cart-2-line ri-lg mr-2"></i>
+Add to Cart
+</button>
+</div>
+</div>
+</div>
+<!-- Checkout Page (Initially Hidden) -->
+<div id="checkout-page" class="fixed inset-0 bg-white z-50 overflow-y-auto hidden">
+<div class="container mx-auto px-4 py-6">
+<!-- Header -->
+<div class="flex items-center justify-between mb-6">
+<button id="back-to-customization" class="flex items-center text-gray-700 hover:text-primary transition">
+<i class="ri-arrow-left-line ri-lg mr-2"></i>
+Back to Customization
+</button>
+<h2 class="text-2xl font-bold text-gray-800">Checkout</h2>
+<div class="w-8"></div> <!-- Spacer for alignment -->
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Order Summary (Left Column) -->
+<div class="lg:col-span-2">
+<div class="bg-white rounded-lg shadow-md p-6 mb-6">
+<h3 class="text-xl font-bold text-gray-800 mb-4">Order Summary</h3>
+<div id="cart-items" class="space-y-4 mb-6">
+<!-- Cart items will be dynamically added here -->
+<div class="flex items-center justify-between pb-4 border-b border-gray-100">
+<div class="flex items-center">
+<img src="https://readdy.ai/api/search-image?query=A%20refreshing%20orange%20and%20mango%20fruit%20drink%20in%20a%20clear%20glass%20with%20ice%20cubes%20and%20a%20slice%20of%20orange%20on%20the%20rim.%20The%20drink%20has%20a%20vibrant%20orange%20color%20with%20a%20splash%20of%20juice%20visible.%20The%20background%20is%20clean%20and%20minimal%20to%20highlight%20the%20drink.&width=80&height=80&seq=sample1&orientation=squarish" alt="Mango Splash" class="w-16 h-16 object-cover object-top rounded mr-4">
+<div>
+<h4 class="font-medium text-gray-800">Mango Splash</h4>
+<p class="text-sm text-gray-500">Medium spice • Extra ice • Quantity: 1</p>
+</div>
+</div>
+<div class="text-right">
+<div class="font-medium text-gray-800">$5.99</div>
+<button class="text-sm text-red-500 hover:text-red-600 transition">Remove</button>
+</div>
+</div>
+</div>
+<div class="space-y-2 pt-4 border-t border-gray-200">
+<div class="flex justify-between text-gray-600">
+<span>Subtotal</span>
+<span id="subtotal">₵59.90</span>
+</div>
+<div class="flex justify-between text-gray-600">
+<span>Tax (10%)</span>
+<span id="tax">₵6.00</span>
+</div>
+<div class="flex justify-between text-gray-600">
+<span>Delivery Fee</span>
+<span id="delivery-fee">₵25.00</span>
+</div>
+<div class="flex justify-between font-bold text-gray-800 pt-2 border-t border-gray-100">
+<span>Total</span>
+<span id="checkout-total" class="text-primary">₵90.90</span>
+</div>
+</div>
+</div>
+<!-- Delivery Options -->
+<div class="bg-white rounded-lg shadow-md p-6">
+<h3 class="text-xl font-bold text-gray-800 mb-4">Delivery Options</h3>
+<!-- Pickup or Delivery -->
+<div class="mb-6">
+<div class="flex items-center justify-between mb-4">
+<h4 class="font-medium text-gray-800">Choose an option</h4>
+<div class="flex items-center">
+<span class="mr-2 text-sm text-gray-600">Pickup</span>
+<label class="custom-switch">
+<input type="checkbox" id="delivery-toggle">
+<span class="switch-slider"></span>
+</label>
+<span class="ml-2 text-sm text-gray-600">Delivery</span>
+</div>
+</div>
+<div id="pickup-options" class="grid grid-cols-1 md:grid-cols-2 gap-3">
+<div class="delivery-option">
+<input type="radio" name="branch" id="branch-downtown" value="downtown" class="hidden" checked>
+<label for="branch-downtown" class="block border border-gray-200 rounded p-4 cursor-pointer hover:border-primary hover:bg-primary/5 transition">
+<div class="font-medium text-gray-800 mb-1">Downtown Branch</div>
+<div class="text-sm text-gray-500">123 Main Street, City Center</div>
+<div class="text-sm text-gray-500 mt-2">Ready in: 15-20 mins</div>
+</label>
+</div>
+<div class="delivery-option">
+<input type="radio" name="branch" id="branch-uptown" value="uptown" class="hidden">
+<label for="branch-uptown" class="block border border-gray-200 rounded p-4 cursor-pointer hover:border-primary hover:bg-primary/5 transition">
+<div class="font-medium text-gray-800 mb-1">Uptown Branch</div>
+<div class="text-sm text-gray-500">456 Park Avenue, Uptown District</div>
+<div class="text-sm text-gray-500 mt-2">Ready in: 15-20 mins</div>
+</label>
+</div>
+<div class="delivery-option">
+<input type="radio" name="branch" id="branch-westside" value="westside" class="hidden">
+<label for="branch-westside" class="block border border-gray-200 rounded p-4 cursor-pointer hover:border-primary hover:bg-primary/5 transition">
+<div class="font-medium text-gray-800 mb-1">Westside Branch</div>
+<div class="text-sm text-gray-500">789 Ocean Drive, West End</div>
+<div class="text-sm text-gray-500 mt-2">Ready in: 15-20 mins</div>
+</label>
+</div>
+</div>
+<div id="delivery-options" class="hidden space-y-4">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1">Address</label>
+<input type="text" class="w-full border border-gray-200 rounded p-3 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary" placeholder="Enter your address">
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1">Apartment/Suite</label>
+<input type="text" class="w-full border border-gray-200 rounded p-3 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary" placeholder="Optional">
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1">City</label>
+<input type="text" class="w-full border border-gray-200 rounded p-3 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary" placeholder="City">
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1">State</label>
+<input type="text" class="w-full border border-gray-200 rounded p-3 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary" placeholder="State">
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1">Zip Code</label>
+<input type="text" class="w-full border border-gray-200 rounded p-3 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary" placeholder="Zip Code">
+</div>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1">Delivery Instructions</label>
+<textarea class="w-full border border-gray-200 rounded p-3 h-20 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary" placeholder="Any special delivery instructions?"></textarea>
+</div>
+<div class="bg-blue-50 p-4 rounded">
+<div class="flex items-center text-blue-800">
+<i class="ri-information-line ri-lg mr-2"></i>
+<span class="font-medium">Estimated delivery time: 30-45 minutes</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Payment Section (Right Column) -->
+<div class="lg:col-span-1">
+<div class="bg-white rounded-lg shadow-md p-6 sticky top-6">
+<h3 class="text-xl font-bold text-gray-800 mb-4">Payment</h3>
+<!-- Payment Methods -->
+<div class="space-y-4 mb-6">
+<div class="border border-gray-200 rounded p-4 flex items-center">
+<input type="radio" id="payment-cash" name="payment-method" class="mr-3" checked>
+<label for="payment-cash" class="flex items-center cursor-pointer w-full">
+<i class="ri-money-dollar-circle-line ri-lg text-green-600 mr-2"></i>
+<span>Cash on Delivery</span>
+</label>
+</div>
+<div class="border border-gray-200 rounded p-4 flex items-center">
+<input type="radio" id="payment-card" name="payment-method" class="mr-3">
+<label for="payment-card" class="flex items-center cursor-pointer w-full">
+<i class="ri-bank-card-line ri-lg text-blue-600 mr-2"></i>
+<span>Credit/Debit Card</span>
+</label>
+</div>
+<div class="border border-gray-200 rounded p-4 flex items-center">
+<input type="radio" id="payment-mobile" name="payment-method" class="mr-3">
+<label for="payment-mobile" class="flex items-center cursor-pointer w-full">
+<i class="ri-smartphone-line ri-lg text-purple-600 mr-2"></i>
+<span>Mobile Payment</span>
+</label>
+</div>
+</div>
+<!-- Place Order Button -->
+<button id="place-order-btn" class="w-full bg-primary text-white py-3 rounded-button font-medium hover:bg-opacity-90 transition flex items-center justify-center whitespace-nowrap">
+<i class="ri-check-line ri-lg mr-2"></i>
+Place Order
+</button>
+<div class="mt-4 text-center text-sm text-gray-500">
+By placing your order, you agree to our
+<a href="#" class="text-primary hover:underline">Terms of Service</a> and
+<a href="#" class="text-primary hover:underline">Privacy Policy</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Add-ons Menu Page (Initially Hidden) -->
+<div id="addons-menu-page" class="fixed inset-0 bg-white z-50 overflow-y-auto hidden">
+<div class="container mx-auto px-4 py-6">
+<div class="flex items-center justify-between mb-6">
+<button id="back-from-addons" class="flex items-center text-gray-700 hover:text-primary transition">
+<i class="ri-arrow-left-line ri-lg mr-2"></i>
+Back to Menu
+</button>
+<h2 class="text-2xl font-bold text-gray-800">Additional Menu Items</h2>
+<div class="w-8"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- Kelewele -->
+<div class="bg-white rounded-lg shadow-md overflow-hidden">
+<div class="relative h-48">
+<img src="https://readdy.ai/api/search-image?query=Traditional%20Ghanaian%20kelewele%20made%20from%20ripe%20plantains%20cut%20into%20small%20cubes%2C%20seasoned%20with%20spices%20like%20ginger%20and%20chili%2C%20deep-fried%20until%20golden%20brown%20and%20crispy.%20Served%20on%20a%20traditional%20wooden%20plate%20with%20a%20garnish%20of%20fresh%20herbs.%20Professional%20food%20photography%20with%20dramatic%20lighting%20highlighting%20the%20crispy%20texture.&width=400&height=300&seq=kelewele1&orientation=landscape" alt="Kelewele" class="w-full h-full object-cover">
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<div class="absolute bottom-4 left-4">
+<h3 class="text-white text-xl font-bold">Spiced Kelewele</h3>
+<p class="text-white/80">₵45.90</p>
+</div>
+</div>
+<div class="p-4">
+<button class="w-full bg-primary text-white px-4 py-2 rounded-button font-medium hover:bg-opacity-90 transition whitespace-nowrap">Add to Order</button>
+</div>
+</div>
+<!-- Smoothies -->
+<div class="bg-white rounded-lg shadow-md overflow-hidden">
+<div class="relative h-48">
+<img src="https://readdy.ai/api/search-image?query=Colorful%20tropical%20smoothie%20bowl%20topped%20with%20fresh%20fruits%2C%20granola%2C%20and%20chia%20seeds.%20The%20smoothie%20has%20a%20vibrant%20purple-pink%20color%20from%20mixed%20berries%20and%20dragon%20fruit.%20Served%20in%20a%20white%20bowl%20with%20artistic%20presentation.%20Professional%20food%20photography%20with%20bright%2C%20natural%20lighting.&width=400&height=300&seq=smoothie1&orientation=landscape" alt="Smoothies" class="w-full h-full object-cover">
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<div class="absolute bottom-4 left-4">
+<h3 class="text-white text-xl font-bold">Tropical Smoothies</h3>
+<p class="text-white/80">₵39.90</p>
+</div>
+</div>
+<div class="p-4">
+<button class="w-full bg-primary text-white px-4 py-2 rounded-button font-medium hover:bg-opacity-90 transition whitespace-nowrap">Add to Order</button>
+</div>
+</div>
+<!-- Ice Cream -->
+<div class="bg-white rounded-lg shadow-md overflow-hidden">
+<div class="relative h-48">
+<img src="https://readdy.ai/api/search-image?query=Artisanal%20ice%20cream%20scoops%20in%20different%20flavors%20like%20vanilla%2C%20chocolate%2C%20and%20strawberry%2C%20decorated%20with%20fresh%20fruits%2C%20nuts%2C%20and%20chocolate%20sauce.%20Served%20in%20an%20elegant%20glass%20bowl%20with%20wafer%20sticks.%20Professional%20food%20photography%20with%20soft%20lighting%20highlighting%20the%20creamy%20texture.&width=400&height=300&seq=icecream1&orientation=landscape" alt="Ice Cream" class="w-full h-full object-cover">
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<div class="absolute bottom-4 left-4">
+<h3 class="text-white text-xl font-bold">Premium Ice Cream</h3>
+<p class="text-white/80">₵35.90</p>
+</div>
+</div>
+<div class="p-4">
+<button class="w-full bg-primary text-white px-4 py-2 rounded-button font-medium hover:bg-opacity-90 transition whitespace-nowrap">Add to Order</button>
+</div>
+</div>
+<!-- Fresh Juices -->
+<div class="bg-white rounded-lg shadow-md overflow-hidden">
+<div class="relative h-48">
+<img src="https://readdy.ai/api/search-image?query=Freshly%20squeezed%20fruit%20juices%20in%20clear%20glasses%20showing%20different%20vibrant%20colors%20from%20orange%2C%20watermelon%2C%20and%20pineapple.%20Garnished%20with%20fresh%20fruit%20slices%20and%20mint%20leaves.%20Professional%20food%20photography%20with%20bright%20lighting%20showing%20the%20fresh%20and%20refreshing%20nature%20of%20the%20drinks.&width=400&height=300&seq=juice1&orientation=landscape" alt="Fresh Juices" class="w-full h-full object-cover">
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<div class="absolute bottom-4 left-4">
+<h3 class="text-white text-xl font-bold">Fresh Fruit Juices</h3>
+<p class="text-white/80">₵29.90</p>
+</div>
+</div>
+<div class="p-4">
+<button class="w-full bg-primary text-white px-4 py-2 rounded-button font-medium hover:bg-opacity-90 transition whitespace-nowrap">Add to Order</button>
+</div>
+</div>
+<!-- Milkshakes -->
+<div class="bg-white rounded-lg shadow-md overflow-hidden">
+<div class="relative h-48">
+<img src="https://readdy.ai/api/search-image?query=Decadent%20milkshake%20topped%20with%20whipped%20cream%2C%20chocolate%20sauce%2C%20and%20various%20toppings%20like%20cookies%20and%20candy.%20Served%20in%20a%20tall%20glass%20with%20a%20thick%20straw.%20The%20milkshake%20has%20a%20rich%2C%20creamy%20texture%20with%20drips%20on%20the%20side%20of%20the%20glass.%20Professional%20food%20photography%20with%20dramatic%20lighting.&width=400&height=300&seq=milkshake1&orientation=landscape" alt="Milkshakes" class="w-full h-full object-cover">
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<div class="absolute bottom-4 left-4">
+<h3 class="text-white text-xl font-bold">Premium Milkshakes</h3>
+<p class="text-white/80">₵42.90</p>
+</div>
+</div>
+<div class="p-4">
+<button class="w-full bg-primary text-white px-4 py-2 rounded-button font-medium hover:bg-opacity-90 transition whitespace-nowrap">Add to Order</button>
+</div>
+</div>
+<!-- Desserts -->
+<div class="bg-white rounded-lg shadow-md overflow-hidden">
+<div class="relative h-48">
+<img src="https://readdy.ai/api/search-image?query=Assorted%20mini%20desserts%20including%20chocolate%20cake%2C%20fruit%20tart%2C%20and%20cheesecake%20arranged%20on%20an%20elegant%20platter.%20Decorated%20with%20fresh%20berries%2C%20mint%20leaves%2C%20and%20powdered%20sugar.%20Professional%20food%20photography%20with%20soft%20lighting%20highlighting%20the%20textures%20and%20details.&width=400&height=300&seq=dessert1&orientation=landscape" alt="Desserts" class="w-full h-full object-cover">
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<div class="absolute bottom-4 left-4">
+<h3 class="text-white text-xl font-bold">Sweet Desserts</h3>
+<p class="text-white/80">₵49.90</p>
+</div>
+</div>
+<div class="p-4">
+<button class="w-full bg-primary text-white px-4 py-2 rounded-button font-medium hover:bg-opacity-90 transition whitespace-nowrap">Add to Order</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Order Confirmation Page (Initially Hidden) -->
+<div id="confirmation-page" class="fixed inset-0 bg-white z-50 overflow-y-auto hidden">
+<div class="container mx-auto px-4 py-12 max-w-3xl">
+<div class="text-center mb-8">
+<div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+<i class="ri-check-line ri-2x text-green-600"></i>
+</div>
+<h2 class="text-3xl font-bold text-gray-800 mb-2">Order Confirmed!</h2>
+<p class="text-gray-600">Your order has been successfully placed.</p>
+</div>
+<div class="bg-gray-50 rounded-lg p-6 mb-8">
+<div class="text-center mb-6">
+<h3 class="text-xl font-bold text-gray-800 mb-2">Your Order Tracking Token</h3>
+<div class="bg-white border-2 border-dashed border-primary rounded-lg p-4 inline-block">
+<span class="text-2xl font-mono font-bold text-primary tracking-wider" id="tracking-token">TBF2506042</span>
+</div>
+<p class="text-sm text-gray-500 mt-2">Use this token to track your order status</p>
+</div>
+<div class="border-t border-gray-200 pt-6">
+<h4 class="font-bold text-gray-800 mb-4">Order Details</h4>
+<div class="space-y-4">
+<div class="flex justify-between">
+<span class="text-gray-600">Order Date:</span>
+<span class="font-medium text-gray-800">June 4, 2025 - 12:30 PM</span>
+</div>
+<div class="flex justify-between">
+<span class="text-gray-600">Order Type:</span>
+<span class="font-medium text-gray-800" id="order-type">Pickup</span>
+</div>
+<div class="flex justify-between">
+<span class="text-gray-600">Location:</span>
+<span class="font-medium text-gray-800" id="order-location">Downtown Branch</span>
+</div>
+<div class="flex justify-between">
+<span class="text-gray-600">Estimated Time:</span>
+<span class="font-medium text-gray-800" id="estimated-time">15-20 minutes</span>
+</div>
+<div class="flex justify-between">
+<span class="text-gray-600">Total Amount:</span>
+<span class="font-medium text-primary" id="confirmation-total">$9.09</span>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-white rounded-lg shadow-md p-6 mb-8">
+<h3 class="text-xl font-bold text-gray-800 mb-4">Track Your Order</h3>
+<div class="relative">
+<div class="flex items-center justify-between mb-8">
+<div class="flex flex-col items-center">
+<div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
+<i class="ri-check-line ri-sm text-white"></i>
+</div>
+<span class="text-sm font-medium text-gray-800 mt-2">Order Placed</span>
+</div>
+<div class="flex flex-col items-center">
+<div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
+<i class="ri-check-line ri-sm text-white"></i>
+</div>
+<span class="text-sm font-medium text-gray-800 mt-2">Preparing</span>
+</div>
+<div class="flex flex-col items-center">
+<div class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
+<i class="ri-time-line ri-sm text-gray-500"></i>
+</div>
+<span class="text-sm font-medium text-gray-500 mt-2" id="third-status">Ready for Pickup</span>
+</div>
+<div class="flex flex-col items-center">
+<div class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
+<i class="ri-time-line ri-sm text-gray-500"></i>
+</div>
+<span class="text-sm font-medium text-gray-500 mt-2">Completed</span>
+</div>
+</div>
+<div class="absolute top-4 left-8 right-8 h-0.5 bg-gray-200 -z-10"></div>
+<div class="absolute top-4 left-8 w-1/3 h-0.5 bg-primary -z-10"></div>
+</div>
+<div class="bg-blue-50 p-4 rounded">
+<div class="flex items-start">
+<i class="ri-information-line ri-lg text-blue-600 mt-0.5 mr-3"></i>
+<div>
+<div class="font-medium text-blue-800 mb-1">Your order is being prepared!</div>
+<p class="text-sm text-blue-700">Our chefs are working on your order. You'll receive updates as your order progresses.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row gap-4 justify-center">
+<button id="back-to-menu-btn" class="bg-white text-gray-800 px-6 py-3 rounded-button font-medium hover:bg-gray-50 transition border border-gray-200 shadow-sm flex items-center justify-center whitespace-nowrap">
+<i class="ri-arrow-left-line ri-lg mr-2"></i>
+Return to Menu
+</button>
+<button class="bg-primary text-white px-6 py-3 rounded-button font-medium hover:bg-opacity-90 transition shadow-md flex items-center justify-center whitespace-nowrap">
+<i class="ri-map-pin-line ri-lg mr-2"></i>
+Get Directions
+</button>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<footer class="bg-gray-900 text-white pt-16 pb-8">
+<div class="container mx-auto px-4">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+<div>
+<a href="#" class="text-3xl font-['Pacifico'] text-white mb-4 inline-block">logo</a>
+<p class="text-gray-400 mb-6">Delicious food, made with the freshest ingredients and delivered with care.</p>
+<div class="flex space-x-4">
+<a href="#" class="w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 hover:bg-primary transition">
+<i class="ri-facebook-fill ri-lg"></i>
+</a>
+<a href="#" class="w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 hover:bg-primary transition">
+<i class="ri-instagram-line ri-lg"></i>
+</a>
+<a href="#" class="w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 hover:bg-primary transition">
+<i class="ri-twitter-x-line ri-lg"></i>
+</a>
+<a href="#" class="w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 hover:bg-primary transition">
+<i class="ri-youtube-line ri-lg"></i>
+</a>
+</div>
+</div>
+<div>
+<h4 class="text-lg font-bold mb-4">Quick Links</h4>
+<ul class="space-y-2">
+<li><a href="index.html" class="text-gray-400 hover:text-white transition">Home</a></li>
+<li><a href="#" class="text-gray-400 hover:text-white transition">Menu</a></li>
+<li><a href="#" class="text-gray-400 hover:text-white transition">About Us</a></li>
+<li><a href="#" class="text-gray-400 hover:text-white transition">Contact</a></li>
+<li><a href="#" class="text-gray-400 hover:text-white transition">Careers</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-lg font-bold mb-4">Contact Us</h4>
+<ul class="space-y-3">
+<li class="flex items-start">
+<i class="ri-map-pin-line ri-lg mt-1 mr-3 text-primary"></i>
+<span class="text-gray-400">123 Main Street, City Center, Country</span>
+</li>
+<li class="flex items-center">
+<i class="ri-phone-line ri-lg mr-3 text-primary"></i>
+<span class="text-gray-400">+1 234 567 890</span>
+</li>
+<li class="flex items-center">
+<i class="ri-mail-line ri-lg mr-3 text-primary"></i>
+<span class="text-gray-400">info@tastybites.com</span>
+</li>
+<li class="flex items-center">
+<i class="ri-time-line ri-lg mr-3 text-primary"></i>
+<span class="text-gray-400">Mon-Sun: 10:00 AM - 10:00 PM</span>
+</li>
+</ul>
+</div>
+<div>
+<h4 class="text-lg font-bold mb-4">Newsletter</h4>
+<p class="text-gray-400 mb-4">Subscribe to our newsletter for promotions and updates.</p>
+<form class="flex mb-4">
+<input type="email" placeholder="Your email" class="flex-grow px-4 py-2 rounded-l focus:outline-none text-gray-800">
+<button type="submit" class="bg-primary text-white px-4 py-2 rounded-r hover:bg-opacity-90 transition whitespace-nowrap">Subscribe</button>
+</form>
+<div class="flex items-center space-x-3">
+<span class="text-gray-400">We accept:</span>
+<i class="ri-visa-fill ri-lg"></i>
+<i class="ri-mastercard-fill ri-lg"></i>
+<i class="ri-paypal-fill ri-lg"></i>
+</div>
+</div>
+</div>
+<div class="border-t border-gray-800 pt-8 text-center text-gray-400 text-sm">
+<p>&copy; 2025 Tasty Bites. All rights reserved.</p>
+<div class="flex justify-center space-x-4 mt-2">
+<a href="#" class="hover:text-white transition">Privacy Policy</a>
+<a href="#" class="hover:text-white transition">Terms of Service</a>
+<a href="#" class="hover:text-white transition">Cookie Policy</a>
+</div>
+</div>
+</div>
+</footer>
+<!-- Scripts -->
+<script id="mobile-menu-script">
+document.addEventListener('DOMContentLoaded', function() {
+const mobileMenuButton = document.getElementById('mobile-menu-button');
+const mobileMenu = document.getElementById('mobile-menu');
+mobileMenuButton.addEventListener('click', function() {
+mobileMenu.classList.toggle('hidden');
+});
+});
+</script>
+<script id="menu-navigation-script">
+document.addEventListener('DOMContentLoaded', function() {
+const addonsMenuPage = document.getElementById('addons-menu-page');
+const backFromAddonsBtn = document.getElementById('back-from-addons');
+// Add event listeners for all "Add-ons Menu" buttons
+document.querySelectorAll('button').forEach(button => {
+if (button.textContent.trim() === 'Add-ons Menu') {
+button.addEventListener('click', function() {
+addonsMenuPage.classList.remove('hidden');
+window.scrollTo(0, 0);
+});
+}
+});
+// Back from add-ons menu
+backFromAddonsBtn.addEventListener('click', function() {
+addonsMenuPage.classList.add('hidden');
+});
+const foodNavItems = document.querySelectorAll('.food-nav-item');
+foodNavItems.forEach(item => {
+item.addEventListener('click', function() {
+const foodType = this.querySelector('h3').textContent.toLowerCase();
+let targetSection;
+switch(foodType) {
+case 'fresh drinks':
+targetSection = document.getElementById('fruit-drinks');
+break;
+case 'burgers':
+targetSection = document.getElementById('burgers-shawarma');
+break;
+case 'rice dishes':
+targetSection = document.getElementById('rice-dishes');
+break;
+case 'loaded fries':
+targetSection = document.getElementById('loaded-fries');
+break;
+case 'chicken wings':
+targetSection = document.getElementById('chicken-wings');
+break;
+}
+if (targetSection) {
+targetSection.scrollIntoView({ behavior: 'smooth' });
+setTimeout(() => {
+targetSection.click();
+}, 1000);
+}
+});
+});
+// Product data
+const products = {
+'fruit-drinks': {
+name: 'Natural Fruit Drinks',
+description: 'Refreshing beverages made from 100% natural fruits, bursting with vitamins and flavor.',
+basePrice: 49.90,
+image: 'https://readdy.ai/api/search-image?query=A%20refreshing%20fruit%20drink%20in%20a%20clear%20glass%20with%20fresh%20fruit%20slices%20on%20the%20rim.%20The%20drink%20has%20a%20vibrant%20color%20with%20ice%20cubes%20visible.%20There%20is%20a%20splash%20of%20juice%20above%20the%20glass%2C%20capturing%20the%20dynamic%20and%20refreshing%20nature%20of%20the%20drink.%20The%20background%20is%20clean%20and%20minimal%20to%20highlight%20the%20drink.&width=300&height=300&seq=drink2&orientation=squarish',
+addons: [
+{ id: 'extra-ice', name: 'Extra Ice', price: 0.00 },
+{ id: 'less-sugar', name: 'Less Sugar', price: 0.00 },
+{ id: 'fruit-pulp', name: 'Extra Fruit Pulp', price: 9.90 },
+{ id: 'mint-leaves', name: 'Fresh Mint Leaves', price: 5.00 },
+{ id: 'honey', name: 'Honey', price: 7.50 },
+{ id: 'chia-seeds', name: 'Chia Seeds', price: 12.50 }
+]
+},
+'coffee': {
+name: 'Coffee Selection',
+description: 'Premium coffee blends from around the world, expertly brewed to perfection.',
+basePrice: 34.90,
+image: 'https://readdy.ai/api/search-image?query=A%20beautifully%20crafted%20coffee%20drink%20in%20an%20elegant%20cup%20with%20latte%20art%20on%20top.%20Steam%20is%20rising%20from%20the%20hot%20coffee.%20The%20coffee%20has%20a%20rich%2C%20dark%20color%20with%20a%20creamy%20layer%20on%20top.%20The%20background%20is%20a%20clean%2C%20minimal%20surface%20to%20highlight%20the%20coffee.&width=300&height=300&seq=coffee2&orientation=squarish',
+addons: [
+{ id: 'extra-shot', name: 'Extra Espresso Shot', price: 15.00 },
+{ id: 'almond-milk', name: 'Almond Milk', price: 10.00 },
+{ id: 'oat-milk', name: 'Oat Milk', price: 10.00 },
+{ id: 'vanilla-syrup', name: 'Vanilla Syrup', price: 7.50 },
+{ id: 'caramel-syrup', name: 'Caramel Syrup', price: 7.50 },
+{ id: 'whipped-cream', name: 'Whipped Cream', price: 5.00 }
+]
+},
+'burgers-shawarma': {
+name: 'Burgers & Shawarma',
+description: 'Juicy burgers and authentic shawarma wraps made with premium ingredients and our special house sauces.',
+basePrice: 79.90,
+image: 'https://readdy.ai/api/search-image?query=A%20mouthwatering%20gourmet%20burger%20with%20a%20juicy%20patty%2C%20melted%20cheese%2C%20fresh%20vegetables%2C%20and%20sauce%20dripping%20down.%20The%20burger%20is%20served%20on%20a%20wooden%20board%20with%20some%20fries%20visible%20on%20the%20side.%20The%20background%20is%20clean%20and%20minimal%20to%20highlight%20the%20food.&width=300&height=300&seq=burger2&orientation=squarish',
+addons: [
+{ id: 'extra-patty', name: 'Extra Patty', price: 25.00 },
+{ id: 'bacon', name: 'Bacon', price: 15.00 },
+{ id: 'avocado', name: 'Avocado', price: 12.50 },
+{ id: 'cheese', name: 'Extra Cheese', price: 10.00 },
+{ id: 'jalapenos', name: 'Jalapeños', price: 7.50 },
+{ id: 'fried-egg', name: 'Fried Egg', price: 12.50 }
+]
+},
+'rice-dishes': {
+name: 'Rice Dishes',
+description: 'Flavorful fried rice and authentic jollof rice prepared with aromatic spices and fresh vegetables.',
+basePrice: 89.90,
+image: 'https://readdy.ai/api/search-image?query=A%20delicious%20plate%20of%20rice%20dish%20%28either%20fried%20rice%20or%20jollof%20rice%29%20with%20visible%20spices%20and%20garnished%20with%20herbs.%20The%20rice%20has%20a%20vibrant%20color%20with%20visible%20vegetables%20and%20meat%20pieces%20mixed%20in.%20The%20dish%20is%20served%20in%20an%20elegant%20bowl%20with%20some%20side%20ingredients%20visible.%20The%20background%20is%20clean%20and%20minimal%20to%20highlight%20the%20food.&width=300&height=300&seq=rice2&orientation=squarish',
+addons: [
+{ id: 'chicken', name: 'Grilled Chicken', price: 25.00 },
+{ id: 'beef', name: 'Beef Strips', price: 30.00 },
+{ id: 'shrimp', name: 'Shrimp', price: 35.00 },
+{ id: 'vegetables', name: 'Extra Vegetables', price: 15.00 },
+{ id: 'plantains', name: 'Fried Plantains', price: 20.00 },
+{ id: 'coleslaw', name: 'Coleslaw', price: 12.50 }
+]
+},
+'loaded-fries': {
+name: 'Loaded Fries',
+description: 'Crispy golden fries topped with melted cheddar cheese, mozzarella cheese pull, crispy bacon bits, grilled onions, and our special house sauce. Served with a side of sour cream.',
+basePrice: 64.90,
+image: 'https://readdy.ai/api/search-image?query=A%20generous%20portion%20of%20golden%20crispy%20french%20fries%20with%20dramatic%20cheese%20pulls%20of%20melted%20mozzarella%20and%20cheddar.%20The%20fries%20are%20topped%20with%20crispy%20bacon%20bits%20and%20grilled%20onions.%20There%20are%20artistic%20splashes%20of%20cheese%20sauce%20and%20fries%20in%20the%20background%20creating%20a%20dynamic%20composition.%20The%20lighting%20emphasizes%20the%20gooey%20cheese%20texture%20and%20golden-brown%20fries.&width=300&height=300&seq=fries2&orientation=squarish',
+addons: [
+{ id: 'extra-cheese', name: 'Extra Cheese Blend', price: 15.00 },
+{ id: 'bacon-bits', name: 'Extra Bacon Bits', price: 15.00 },
+{ id: 'sour-cream', name: 'Extra Sour Cream', price: 7.50 },
+{ id: 'grilled-chicken', name: 'Grilled Chicken', price: 25.00 },
+{ id: 'pulled-pork', name: 'Pulled Pork', price: 25.00 },
+{ id: 'kelewele', name: 'Spiced Kelewele', price: 20.00 }
+]
+},
+'chicken-wings': {
+name: 'Chicken Wings',
+description: 'Crispy fried chicken wings tossed in your choice of sauce, from mild to extra spicy.',
+basePrice: 99.90,
+image: 'https://readdy.ai/api/search-image?query=A%20tempting%20plate%20of%20crispy%20fried%20chicken%20wings%20with%20a%20variety%20of%20dipping%20sauces%20on%20the%20side.%20The%20wings%20have%20a%20golden-brown%20crispy%20exterior%20with%20visible%20seasoning.%20The%20wings%20are%20arranged%20on%20a%20serving%20plate%20with%20garnishes%20like%20celery%20sticks%20and%20lemon%20wedges.%20The%20background%20is%20clean%20and%20minimal%20to%20highlight%20the%20chicken%20wings.&width=300&height=300&seq=wings2&orientation=squarish',
+addons: [
+{ id: 'bbq-sauce', name: 'BBQ Sauce', price: 7.50 },
+{ id: 'buffalo-sauce', name: 'Buffalo Sauce', price: 7.50 },
+{ id: 'honey-garlic', name: 'Honey Garlic Sauce', price: 7.50 },
+{ id: 'blue-cheese', name: 'Blue Cheese Dip', price: 10.00 },
+{ id: 'ranch-dip', name: 'Ranch Dip', price: 10.00 },
+{ id: 'celery-sticks', name: 'Celery Sticks', price: 5.00 }
+]
+}
+};
+// Menu card click handlers
+const menuCards = document.querySelectorAll('.menu-card');
+const customizationPage = document.getElementById('customization-page');
+const backToMenuBtn = document.getElementById('back-to-menu');
+menuCards.forEach(card => {
+card.addEventListener('click', function() {
+const productId = this.id;
+const product = products[productId];
+// Populate customization page with product details
+document.getElementById('product-name').textContent = product.name;
+document.getElementById('product-description').textContent = product.description;
+document.getElementById('product-base-price').textContent = `₵${product.basePrice.toFixed(2)}`;
+document.getElementById('product-image').src = product.image;
+// Populate add-ons
+const addonsContainer = document.getElementById('addons-container');
+addonsContainer.innerHTML = '';
+product.addons.forEach(addon => {
+const addonHtml = `
+<div class="addon-option">
+<input type="checkbox" id="${addon.id}" name="addon" value="${addon.id}" class="hidden" data-price="${addon.price}">
+<label for="${addon.id}" class="flex justify-between items-center border border-gray-200 rounded p-3 cursor-pointer hover:border-primary hover:bg-primary/5 transition">
+<span class="font-medium text-gray-800">${addon.name}</span>
+<span class="text-primary">+₵${addon.price.toFixed(2)}</span>
+</label>
+</div>
+`;
+addonsContainer.innerHTML += addonHtml;
+});
+// Update total price
+updateTotalPrice();
+// Show customization page
+customizationPage.classList.remove('hidden');
+window.scrollTo(0, 0);
+});
+});
+// Back to menu button
+backToMenuBtn.addEventListener('click', function() {
+customizationPage.classList.add('hidden');
+});
+// Quantity controls
+const decreaseBtn = document.getElementById('decrease-quantity');
+const increaseBtn = document.getElementById('increase-quantity');
+const quantityInput = document.getElementById('quantity-input');
+decreaseBtn.addEventListener('click', function() {
+const currentValue = parseInt(quantityInput.value);
+if (currentValue > 1) {
+quantityInput.value = currentValue - 1;
+updateTotalPrice();
+}
+});
+increaseBtn.addEventListener('click', function() {
+const currentValue = parseInt(quantityInput.value);
+quantityInput.value = currentValue + 1;
+updateTotalPrice();
+});
+quantityInput.addEventListener('change', function() {
+if (this.value < 1) {
+this.value = 1;
+}
+updateTotalPrice();
+});
+// Add-ons change event
+document.addEventListener('change', function(e) {
+if (e.target.name === 'addon') {
+updateTotalPrice();
+}
+});
+// Update total price function
+function updateTotalPrice() {
+const productNameElement = document.getElementById('product-name');
+const productName = productNameElement.textContent;
+// Find the product in our data
+let basePrice = 0;
+for (const key in products) {
+if (products[key].name === productName) {
+basePrice = products[key].basePrice;
+break;
+}
+}
+// Calculate add-ons price
+let addonsPrice = 0;
+const selectedAddons = document.querySelectorAll('input[name="addon"]:checked');
+selectedAddons.forEach(addon => {
+addonsPrice += parseFloat(addon.dataset.price);
+});
+// Get quantity
+const quantity = parseInt(document.getElementById('quantity-input').value);
+// Calculate total
+const total = (basePrice + addonsPrice) * quantity;
+// Update display
+document.getElementById('total-price').textContent = `₵${total.toFixed(2)}`;
+}
+// Add to cart button
+const addToCartBtn = document.getElementById('add-to-cart');
+const checkoutPage = document.getElementById('checkout-page');
+addToCartBtn.addEventListener('click', function() {
+// Hide customization page
+customizationPage.classList.add('hidden');
+// Show checkout page
+checkoutPage.classList.remove('hidden');
+window.scrollTo(0, 0);
+// Update cart display (in a real app, you would add the item to cart)
+// For this demo, we'll just use the sample item
+});
+// Back to customization button
+const backToCustomizationBtn = document.getElementById('back-to-customization');
+backToCustomizationBtn.addEventListener('click', function() {
+// Hide checkout page
+checkoutPage.classList.add('hidden');
+// Show customization page
+customizationPage.classList.remove('hidden');
+window.scrollTo(0, 0);
+});
+});
+</script>
+<script id="checkout-script">
+document.addEventListener('DOMContentLoaded', function() {
+const deliveryToggle = document.getElementById('delivery-toggle');
+const pickupOptions = document.getElementById('pickup-options');
+const deliveryOptions = document.getElementById('delivery-options');
+const deliveryFee = document.getElementById('delivery-fee');
+const checkoutTotal = document.getElementById('checkout-total');
+// Toggle between pickup and delivery
+deliveryToggle.addEventListener('change', function() {
+if (this.checked) {
+// Delivery selected
+pickupOptions.classList.add('hidden');
+deliveryOptions.classList.remove('hidden');
+deliveryFee.textContent = '₵25.00';
+updateTotal();
+} else {
+// Pickup selected
+pickupOptions.classList.remove('hidden');
+deliveryOptions.classList.add('hidden');
+deliveryFee.textContent = '₵0.00';
+updateTotal();
+}
+});
+// Update total when delivery option changes
+function updateTotal() {
+const subtotal = parseFloat(document.getElementById('subtotal').textContent.replace('₵', ''));
+const tax = parseFloat(document.getElementById('tax').textContent.replace('₵', ''));
+const delivery = parseFloat(deliveryFee.textContent.replace('₵', ''));
+const total = subtotal + tax + delivery;
+checkoutTotal.textContent = `₵${total.toFixed(2)}`;
+}
+// Place order button
+const placeOrderBtn = document.getElementById('place-order-btn');
+const confirmationPage = document.getElementById('confirmation-page');
+placeOrderBtn.addEventListener('click', function() {
+// Hide checkout page
+checkoutPage.classList.add('hidden');
+// Update confirmation page details based on selection
+if (deliveryToggle.checked) {
+document.getElementById('order-type').textContent = 'Delivery';
+document.getElementById('order-location').textContent = 'Your Address';
+document.getElementById('estimated-time').textContent = '30-45 minutes';
+document.getElementById('third-status').textContent = 'Out for Delivery';
+} else {
+const selectedBranch = document.querySelector('input[name="branch"]:checked');
+document.getElementById('order-type').textContent = 'Pickup';
+document.getElementById('order-location').textContent = selectedBranch.labels[0].querySelector('.font-medium').textContent;
+document.getElementById('estimated-time').textContent = '15-20 minutes';
+document.getElementById('third-status').textContent = 'Ready for Pickup';
+}
+document.getElementById('confirmation-total').textContent = checkoutTotal.textContent;
+// Show confirmation page
+confirmationPage.classList.remove('hidden');
+window.scrollTo(0, 0);
+});
+// Back to menu from confirmation
+const backToMenuBtn = document.getElementById('back-to-menu-btn');
+backToMenuBtn.addEventListener('click', function() {
+// Hide confirmation page
+confirmationPage.classList.add('hidden');
+// Reset cart (in a real app)
+// Scroll to top of main page
+window.scrollTo(0, 0);
+});
+});
+</script>
+</body>
+</html>
